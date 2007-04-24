@@ -10,9 +10,9 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.9
-Release: %mkrel 0.rc2.2
+Release: %mkrel 1
 URL: http://www.freedesktop.org/Software/hal
-Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.rc2.tar.bz2
+Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 Patch3: hal-0.2.97-order.patch
 # (fc) 0.4.7-8mdk fix translation
@@ -31,12 +31,8 @@ Patch48: hal-allow_uid_for_ntfs.patch
 Patch51: hal-user_xattr.patch
 # (blino) 0.5.9-0.rc1.3mdv fix vbe_post call for pm-utils
 Patch53: hal-0.5.9-vbe-post.patch
-# (fc) 0.5.9-0.rc2.2mdv fix CDROM TOC reading for drive giving invalid TOC info (GIT)
-Patch54: hal-0.5.9-cdromtoc.patch
-# (fc) 0.5.9-0.rc2.2mdv fix locking (GIT)
-Patch55: hal-0.5.9-fixlocking.patch
-# (fc) 0.5.9-0.rc2.2mdv fix LUKS locking (GIT)
-Patch56: hal-0.5.9-lukslock.patch
+# (fcp 0.5.9-1mdv fix luks locking (Mdv bug #28485) (GIT)
+Patch54: hal-0.5.9-fixlukslock.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -52,7 +48,6 @@ BuildRequires: python python-devel
 BuildRequires: pciutils-devel
 BuildRequires: popt-devel
 BuildRequires: libvolume_id-devel
-BuildRequires: libparted-devel
 BuildRequires: usbutils
 #BuildRequires: policykit-devel
 BuildRequires: glibc-static-devel
@@ -70,6 +65,8 @@ Requires: hal-info
 Requires: pciutils 
 #needed to get usb.ids
 Requires: usbutils
+# needed for luks support
+Requires: cryptsetup-luks
 
 %description
 
@@ -124,14 +121,8 @@ Headers and static libraries for HAL.
 %patch48 -p1 -b .allow_uid_for_nfts
 %patch51 -p1 -b .user_xattr
 %patch53 -p1 -b .vbepost
-%patch54 -p1 -b .cdromtoc
-%patch55 -p1 -b .fixlocking
-%patch56 -p1 -b .lukslock
+%patch54 -p1 -b .fixlukslock
 
-#needed by patch56
-aclocal-1.9
-automake-1.9 -a
-autoconf
 
 %build
 
@@ -212,6 +203,9 @@ StartupNotify=true
 Categories=GNOME;GTK;Settings;HardwareSettings;X-MandrivaLinux-System-Configuration-Hardware;
 EOF
 
+# remove unpackaged files
+rm -fr $RPM_BUILD_ROOT%{_datadir}/doc/hal
+
 %clean
 rm -rf %{buildroot}
 
@@ -248,7 +242,7 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc COPYING NEWS
+%doc COPYING NEWS doc/spec/docbook.css doc/spec/*.png doc/spec/*.html
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/hal.conf
 %config(noreplace) %{_sysconfdir}/rc.d/init.d/*
 %config(noreplace) %{_sysconfdir}/udev/rules.d/90-hal.rules
@@ -263,6 +257,10 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %{_bindir}/hal-find-by-capability
 %{_bindir}/hal-find-by-property
 %{_bindir}/hal-is-caller-locked-out
+%{_bindir}/hal-disable-polling
+%{_bindir}/hal-lock
+%{_mandir}/man1/*
+%{_mandir}/man8/*
 
 %attr(0750,haldaemon,haldaemon) %dir %{_var}/cache/hald
 
