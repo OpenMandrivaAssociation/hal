@@ -10,29 +10,23 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.9
-Release: %mkrel 1
+Release: %mkrel 2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
+# (fc) 0.5.9-2mdv update to 0.5.9 branch snapshot (20070511) (GIT)
+Patch0: hal-0.5.9-gitsnapshot20070511.patch
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 Patch3: hal-0.2.97-order.patch
-# (fc) 0.4.7-8mdk fix translation
-Patch10: hal-0.4.8-fixpo.patch
 # (fc) 0.4.7-9mdk fix media check on usb memory keys (Mdk bug #15070)
 Patch11: hal-0.5.8.1-usbmediacheck.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
 Patch21: hal-0.5.7.1-pinit.patch
 # (blino) 0.5.8.1-4mdv prefer pm-utils when available
 Patch45: hal-0.5.9-prefer-pm-utils.patch
-# (fc) 0.5.8.1-6mdv allow "flush" for vfat
-Patch47: hal-flush.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-# (fc) 0.5.8.1-8mdv allow user_xattr for ext2/ext3 for mount
-Patch51: hal-user_xattr.patch
-# (blino) 0.5.9-0.rc1.3mdv fix vbe_post call for pm-utils
-Patch53: hal-0.5.9-vbe-post.patch
-# (fcp 0.5.9-1mdv fix luks locking (Mdv bug #28485) (GIT)
-Patch54: hal-0.5.9-fixlukslock.patch
+# (fc) 0.5.9-2mdv fix dbus crash (Gentoo)
+Patch49: hal-0.5.9-fixdbuscrash.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -112,22 +106,18 @@ Headers and static libraries for HAL.
 
 %prep
 %setup -q
+%patch0 -p1 -b .gitsnapshot
 %patch3 -p1 -b .order
-%patch10 -p1 -b .fixpo
 %patch11 -p1 -b .usbmediacheck
 %patch21 -p1 -b .pinit
 %patch45 -p1 -b .pm-utils
-%patch47 -p1 -b .flush
-%patch48 -p1 -b .allow_uid_for_nfts
-%patch51 -p1 -b .user_xattr
-%patch53 -p1 -b .vbepost
-%patch54 -p1 -b .fixlukslock
-
+%patch48 -p1 -b .allow_uid_for_ntfs
+%patch49 -p1 -b .fixdbuscrash
 
 %build
 
 %configure2_5x \
-    --localstatedir=%{_var} \
+    --localstatedir=%{_var} --enable-acpi-ibm --enable-acpi-toshiba \
     --disable-selinux --disable-policy-kit --enable-umount-helper \
     --enable-docbook-docs --enable-gtk-doc
 
