@@ -10,7 +10,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.9
-Release: %mkrel 2
+Release: %mkrel 3
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
 # (fc) 0.5.9-2mdv update to 0.5.9 branch snapshot (20070511) (GIT)
@@ -37,6 +37,7 @@ Requires(post): rpm-helper
 BuildRequires: expat-devel >= %{expat_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
+BuildRequires: libusb-devel
 BuildRequires: libcap-devel
 BuildRequires: python python-devel
 BuildRequires: pciutils-devel
@@ -52,6 +53,9 @@ BuildRequires: intltool
 BuildRequires: gtk-doc
 BuildRequires: xmlto
 BuildRequires: automake1.9
+%if %mdkversion >= 200800
+BuildRequires: libsmbios-devel
+%endif
 Requires: dbus >= %{dbus_version}
 Requires (pre): hal-info > 0.0-4.20070302.1mdv
 Requires: hal-info 
@@ -119,7 +123,10 @@ Headers and static libraries for HAL.
 %configure2_5x \
     --localstatedir=%{_var} --enable-acpi-ibm --enable-acpi-toshiba \
     --disable-selinux --disable-policy-kit --enable-umount-helper \
-    --enable-docbook-docs --enable-gtk-doc
+    --enable-docbook-docs --enable-gtk-doc --with-usb-csr \
+%if %mdkversion >= 2008
+    --with-dell-backlight
+%endif
 
 %make
 
