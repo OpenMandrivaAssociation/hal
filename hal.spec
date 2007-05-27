@@ -10,7 +10,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.9
-Release: %mkrel 3
+Release: %mkrel 4
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
 # (fc) 0.5.9-2mdv update to 0.5.9 branch snapshot (20070511) (GIT)
@@ -54,7 +54,9 @@ BuildRequires: gtk-doc
 BuildRequires: xmlto
 BuildRequires: automake1.9
 %if %mdkversion >= 200800
+%ifarch %ix86 x86_64 ia64
 BuildRequires: libsmbios-devel
+%endif
 %endif
 Requires: dbus >= %{dbus_version}
 Requires (pre): hal-info > 0.0-4.20070302.1mdv
@@ -125,7 +127,9 @@ Headers and static libraries for HAL.
     --disable-selinux --disable-policy-kit --enable-umount-helper \
     --enable-docbook-docs --enable-gtk-doc --with-usb-csr \
 %if %mdkversion >= 2008
+%ifarch %ix86 x86_64 ia64
     --with-dell-backlight
+%endif
 %endif
 
 %make
