@@ -1,4 +1,4 @@
-%define expat_version           1.95.5
+%define expat_version           2.0.1
 %define glib2_version           2.6.0
 %define dbus_glib_version       0.70
 %define dbus_version       0.90
@@ -10,7 +10,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.9
-Release: %mkrel 4
+Release: %mkrel 5
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
 # (fc) 0.5.9-2mdv update to 0.5.9 branch snapshot (20070511) (GIT)
