@@ -10,7 +10,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.9
-Release: %mkrel 5
+Release: %mkrel 6
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
 # (fc) 0.5.9-2mdv update to 0.5.9 branch snapshot (20070511) (GIT)
