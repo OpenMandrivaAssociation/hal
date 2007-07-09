@@ -6,15 +6,14 @@
 
 %define lib_major 1
 %define lib_name %mklibname %{name} %{lib_major}
+%define develname %mklibname %{name} -d
 
 Summary: Hardware Abstraction Layer
 Name: hal
-Version: 0.5.9
-Release: %mkrel 6
+Version: 0.5.9.1
+Release: %mkrel 1
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
-# (fc) 0.5.9-2mdv update to 0.5.9 branch snapshot (20070511) (GIT)
-Patch0: hal-0.5.9-gitsnapshot20070511.patch
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 Patch3: hal-0.2.97-order.patch
 # (fc) 0.4.7-9mdk fix media check on usb memory keys (Mdk bug #15070)
@@ -94,7 +93,7 @@ Requires: %name >= %{version}-%{release}
 %description -n %{lib_name}
 HAL shared library.
 
-%package -n %{lib_name}-devel
+%package -n %{develname}
 Summary: Libraries and headers for HAL
 Group: Development/C
 Requires: %{name} = %{version}
@@ -103,22 +102,21 @@ Provides: %{name}-devel = %{version}-%{release}
 Provides: lib%{name}-devel = %{version}-%{release}
 #gw got this from the pkgconfig file:
 Requires: dbus-devel >= %{dbus_version}
-Conflicts: %{_lib}hal0-devel 
+Conflicts: %{_lib}hal0-devel
+Obsoletes: %{lib_name}-devel
 
-%description -n %{lib_name}-devel
+%description -n %{develname}
 
 Headers and static libraries for HAL.
 
-
 %prep
 %setup -q
-%patch0 -p1 -b .gitsnapshot
 %patch3 -p1 -b .order
 %patch11 -p1 -b .usbmediacheck
 %patch21 -p1 -b .pinit
 %patch45 -p1 -b .pm-utils
 %patch48 -p1 -b .allow_uid_for_ntfs
-%patch49 -p1 -b .fixdbuscrash
+#%patch49 -p1 -b .fixdbuscrash
 
 %build
 
@@ -172,19 +170,6 @@ cat << EOF > $RPM_BUILD_ROOT%{_datadir}/hal/fdi/policy/10osvendor/90-default-pol
 </deviceinfo>
 EOF
 
-install -d -m 755 $RPM_BUILD_ROOT%{_menudir}
-cat >$RPM_BUILD_ROOT%{_menudir}/hal-gnome <<EOF
-?package(hal-gnome): \
-	command="%{_bindir}/hal-device-manager" \
-	needs="X11" \
-	section="Configuration/Hardware" \
-	icon="hal-device-manager.png" \
-	title="Device Manager" \
-	longtitle="Shows information about hardware on your system" \
-	startup_notify="true" \
-	xdg="true"
-EOF
-
 mkdir -p %buildroot{%_liconsdir,%_miconsdir,%_iconsdir}
 convert -scale 48x48 tools/device-manager/fdo-logo.png %buildroot%_liconsdir/hal-device-manager.png
 convert -scale 32x32 tools/device-manager/fdo-logo.png %buildroot%_iconsdir/hal-device-manager.png
@@ -213,7 +198,6 @@ rm -rf %{buildroot}
 %triggerpostun -- hal < 0.2.97-3mdk
 /sbin/chkconfig --del haldaemon
 /sbin/chkconfig --add haldaemon
-
 
 %pre
 %_pre_useradd haldaemon / /sbin/nologin
@@ -274,7 +258,7 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %defattr(-,root,root)
 %{_libdir}/*hal*.so.%{lib_major}*
 
-%files -n %{lib_name}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %doc doc/TODO doc/spec/*.png doc/spec/*.html
 %doc %_datadir/gtk-doc/html/*
@@ -289,7 +273,6 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %defattr(-,root,root)
 %{_bindir}/hal-device-manager
 %{_datadir}/hal/device-manager
-%_menudir/hal-gnome
 %_liconsdir/hal-device-manager.png
 %_iconsdir/hal-device-manager.png
 %_miconsdir/hal-device-manager.png
