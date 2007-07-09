@@ -24,8 +24,6 @@ Patch21: hal-0.5.7.1-pinit.patch
 Patch45: hal-0.5.9-prefer-pm-utils.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-# (fc) 0.5.9-2mdv fix dbus crash (Gentoo)
-Patch49: hal-0.5.9-fixdbuscrash.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -116,7 +114,6 @@ Headers and static libraries for HAL.
 %patch21 -p1 -b .pinit
 %patch45 -p1 -b .pm-utils
 %patch48 -p1 -b .allow_uid_for_ntfs
-#%patch49 -p1 -b .fixdbuscrash
 
 %build
 
