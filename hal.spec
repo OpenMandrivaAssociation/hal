@@ -11,7 +11,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.9.1
-Release: %mkrel 1
+Release: %mkrel 2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -24,7 +24,8 @@ Patch21: hal-0.5.7.1-pinit.patch
 Patch45: hal-0.5.9-prefer-pm-utils.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-
+# (tpg) see #31912
+Patch49: hal-0.5.9.1-fix-linux_dvd_rw_utils.diff
 License: AFL/GPL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -43,13 +44,12 @@ BuildRequires: libvolume_id-devel
 BuildRequires: usbutils
 #BuildRequires: policykit-devel
 BuildRequires: glibc-static-devel
-BuildRequires: perl-XML-Parser
-BuildRequires: ImageMagick
+BuildRequires: perl(XML::Parser)
+BuildRequires: imagemagick
 BuildRequires: docbook-dtd412-xml
 BuildRequires: intltool
 BuildRequires: gtk-doc
 BuildRequires: xmlto
-BuildRequires: automake1.9
 %if %mdkversion >= 200800
 %ifarch %ix86 x86_64 ia64
 BuildRequires: libsmbios-devel
@@ -66,11 +66,9 @@ Requires: usbutils
 Requires: cryptsetup-luks
 
 %description
-
 HAL is daemon for collection and maintaining information from several
 sources about the hardware on the system. It provides a live device
 list through D-BUS.
-
 
 %package gnome
 Summary: GNOME based device manager for HAL
@@ -81,7 +79,7 @@ Requires: gnome-python >= 2.0.0
 Requires: gnome-python-gnomevfs >= 2.0.0
 
 %description gnome
-GNOME program for displaying the devices detected by HAL
+GNOME program for displaying the devices detected by HAL.
 
 %package -n %{lib_name}
 Summary: Shared library for using HAL
@@ -104,7 +102,6 @@ Conflicts: %{_lib}hal0-devel
 Obsoletes: %{lib_name}-devel
 
 %description -n %{develname}
-
 Headers and static libraries for HAL.
 
 %prep
@@ -114,6 +111,7 @@ Headers and static libraries for HAL.
 %patch21 -p1 -b .pinit
 %patch45 -p1 -b .pm-utils
 %patch48 -p1 -b .allow_uid_for_ntfs
+%patch49 -p1
 
 %build
 
@@ -130,13 +128,13 @@ Headers and static libraries for HAL.
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %makeinstall_std
 
 %find_lang %{name}
 
-cat << EOF > $RPM_BUILD_ROOT%{_datadir}/hal/fdi/policy/10osvendor/99-mandriva-storage-policy-fixed-drives.fdi
+cat << EOF > %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/99-mandriva-storage-policy-fixed-drives.fdi
 <?xml version="1.0" encoding="UTF-8"?> <!-- -*- SGML -*- --> 
 
 <deviceinfo version="0.2">
@@ -150,7 +148,7 @@ cat << EOF > $RPM_BUILD_ROOT%{_datadir}/hal/fdi/policy/10osvendor/99-mandriva-st
 </deviceinfo>
 EOF
 
-cat << EOF > $RPM_BUILD_ROOT%{_datadir}/hal/fdi/policy/10osvendor/90-default-policy-mount-point-names.fdi
+cat << EOF > %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/90-default-policy-mount-point-names.fdi
 <?xml version="1.0" encoding="ISO-8859-1"?> <!-- -*- SGML -*- --> 
 
 <deviceinfo version="0.2">
@@ -172,8 +170,8 @@ convert -scale 48x48 tools/device-manager/fdo-logo.png %buildroot%_liconsdir/hal
 convert -scale 32x32 tools/device-manager/fdo-logo.png %buildroot%_iconsdir/hal-device-manager.png
 convert -scale 16x16 tools/device-manager/fdo-logo.png %buildroot%_miconsdir/hal-device-manager.png
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
 Encoding=UTF-8
 Name=Device Manager
@@ -187,7 +185,7 @@ Categories=GNOME;GTK;Settings;HardwareSettings;X-MandrivaLinux-System-Configurat
 EOF
 
 # remove unpackaged files
-rm -fr $RPM_BUILD_ROOT%{_datadir}/doc/hal
+rm -fr %{buildroot}%{_datadir}/doc/hal
 
 %clean
 rm -rf %{buildroot}
@@ -274,5 +272,3 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %_iconsdir/hal-device-manager.png
 %_miconsdir/hal-device-manager.png
 %{_datadir}/applications/*.desktop
-
-
