@@ -1,4 +1,4 @@
-%define expat_version           2.0.1
+%define expat_version           1.95.5
 %define glib2_version           2.6.0
 %define dbus_glib_version       0.70
 %define dbus_version       0.90
@@ -6,25 +6,27 @@
 
 %define lib_major 1
 %define lib_name %mklibname %{name} %{lib_major}
+%if %mdkversion >= 200800
 %define develname %mklibname %{name} -d
+%else
+%define develname %mklibname %{name} %{lib_major} -d
+%endif
 
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.9.1
-Release: %mkrel 2
+Release: %mkrel 3
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 Patch3: hal-0.2.97-order.patch
-# (fc) 0.4.7-9mdk fix media check on usb memory keys (Mdk bug #15070)
-Patch11: hal-0.5.8.1-usbmediacheck.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
 Patch21: hal-0.5.7.1-pinit.patch
 # (blino) 0.5.8.1-4mdv prefer pm-utils when available
 Patch45: hal-0.5.9-prefer-pm-utils.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-# (tpg) see #31912
+# (tpg) 0.5.9.1-2mdv fix build with latest glibc (#31912)
 Patch49: hal-0.5.9.1-fix-linux_dvd_rw_utils.diff
 License: AFL/GPL
 Group: System/Libraries
@@ -42,15 +44,15 @@ BuildRequires: pciutils-devel
 BuildRequires: popt-devel
 BuildRequires: libvolume_id-devel
 BuildRequires: usbutils
-#BuildRequires: policykit-devel
 BuildRequires: glibc-static-devel
 BuildRequires: perl(XML::Parser)
-BuildRequires: imagemagick
+BuildRequires: ImageMagick
 BuildRequires: docbook-dtd412-xml
 BuildRequires: intltool
 BuildRequires: gtk-doc
 BuildRequires: xmlto
 %if %mdkversion >= 200800
+BuildRequires: consolekit-devel
 %ifarch %ix86 x86_64 ia64
 BuildRequires: libsmbios-devel
 %endif
@@ -99,7 +101,9 @@ Provides: lib%{name}-devel = %{version}-%{release}
 #gw got this from the pkgconfig file:
 Requires: dbus-devel >= %{dbus_version}
 Conflicts: %{_lib}hal0-devel
+%if %mdkversion >= 200800
 Obsoletes: %{lib_name}-devel
+%endif
 
 %description -n %{develname}
 Headers and static libraries for HAL.
@@ -107,11 +111,10 @@ Headers and static libraries for HAL.
 %prep
 %setup -q
 %patch3 -p1 -b .order
-%patch11 -p1 -b .usbmediacheck
 %patch21 -p1 -b .pinit
 %patch45 -p1 -b .pm-utils
 %patch48 -p1 -b .allow_uid_for_ntfs
-%patch49 -p1
+%patch49 -p1 -b .fixglibc
 
 %build
 
@@ -119,11 +122,15 @@ Headers and static libraries for HAL.
     --localstatedir=%{_var} --enable-acpi-ibm --enable-acpi-toshiba \
     --disable-selinux --disable-policy-kit --enable-umount-helper \
     --enable-docbook-docs --enable-gtk-doc --with-usb-csr \
-%if %mdkversion >= 2008
+%if %mdkversion >= 200800
 %ifarch %ix86 x86_64 ia64
-    --with-dell-backlight
+    --with-dell-backlight \
 %endif
+    --enable-console-kit \
+%else
+    --disable-console-kit \
 %endif
+
 
 %make
 
