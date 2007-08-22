@@ -12,18 +12,18 @@
 %define develname %mklibname %{name} %{lib_major} -d
 %endif
 
+%define prerelease rc1
+
 Summary: Hardware Abstraction Layer
 Name: hal
-Version: 0.5.9.1
-Release: %mkrel 3
+Version: 0.5.10
+Release: %mkrel 0.%{prerelease}.1
 URL: http://www.freedesktop.org/Software/hal
-Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.bz2
+Source0: http://freedesktop.org/~david/dist/%{name}-%{version}%{prerelease}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 Patch3: hal-0.2.97-order.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
 Patch21: hal-0.5.7.1-pinit.patch
-# (blino) 0.5.8.1-4mdv prefer pm-utils when available
-Patch45: hal-0.5.9-prefer-pm-utils.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
 # (tpg) 0.5.9.1-2mdv fix build with latest glibc (#31912)
@@ -51,6 +51,7 @@ BuildRequires: docbook-dtd412-xml
 BuildRequires: intltool
 BuildRequires: gtk-doc
 BuildRequires: xmlto
+BuildRequires: gperf
 %if %mdkversion >= 200800
 BuildRequires: consolekit-devel
 %ifarch %ix86 x86_64 ia64
@@ -71,17 +72,6 @@ Requires: cryptsetup-luks
 HAL is daemon for collection and maintaining information from several
 sources about the hardware on the system. It provides a live device
 list through D-BUS.
-
-%package gnome
-Summary: GNOME based device manager for HAL
-Group: Graphical desktop/GNOME
-Requires: dbus-python >= %{dbus_python_version}
-Requires: pygtk2.0-libglade >= 2.0.0
-Requires: gnome-python >= 2.0.0
-Requires: gnome-python-gnomevfs >= 2.0.0
-
-%description gnome
-GNOME program for displaying the devices detected by HAL.
 
 %package -n %{lib_name}
 Summary: Shared library for using HAL
@@ -112,7 +102,6 @@ Headers and static libraries for HAL.
 %setup -q
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
-%patch45 -p1 -b .pm-utils
 %patch48 -p1 -b .allow_uid_for_ntfs
 %patch49 -p1 -b .fixglibc
 
@@ -172,28 +161,6 @@ cat << EOF > %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/90-default-policy
 </deviceinfo>
 EOF
 
-mkdir -p %buildroot{%_liconsdir,%_miconsdir,%_iconsdir}
-convert -scale 48x48 tools/device-manager/fdo-logo.png %buildroot%_liconsdir/hal-device-manager.png
-convert -scale 32x32 tools/device-manager/fdo-logo.png %buildroot%_iconsdir/hal-device-manager.png
-convert -scale 16x16 tools/device-manager/fdo-logo.png %buildroot%_miconsdir/hal-device-manager.png
-
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
-[Desktop Entry]
-Encoding=UTF-8
-Name=Device Manager
-Comment=Shows information about hardware on your system
-Exec=%{_bindir}/hal-device-manager
-Icon=hal-device-manager
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=GNOME;GTK;Settings;HardwareSettings;X-MandrivaLinux-System-Configuration-Hardware;
-EOF
-
-# remove unpackaged files
-rm -fr %{buildroot}%{_datadir}/doc/hal
-
 %clean
 rm -rf %{buildroot}
 
@@ -218,12 +185,6 @@ fi
 
 %postun -n %{lib_name} -p /sbin/ldconfig
 
-%post gnome
-%update_menus
-
-%postun gnome
-%clean_menus
-
 %triggerpostun -- hal < 0.5.7.1
 sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for details/d" -e '/.*\,managed.*/d' /etc/fstab
 
@@ -246,6 +207,7 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %{_bindir}/hal-is-caller-locked-out
 %{_bindir}/hal-disable-polling
 %{_bindir}/hal-lock
+%{_bindir}/hal-setup-keymap
 %{_mandir}/man1/*
 %{_mandir}/man8/*
 
@@ -271,11 +233,3 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %{_includedir}/*
 
 
-%files gnome
-%defattr(-,root,root)
-%{_bindir}/hal-device-manager
-%{_datadir}/hal/device-manager
-%_liconsdir/hal-device-manager.png
-%_iconsdir/hal-device-manager.png
-%_miconsdir/hal-device-manager.png
-%{_datadir}/applications/*.desktop
