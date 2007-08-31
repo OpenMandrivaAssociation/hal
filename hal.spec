@@ -17,7 +17,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %mkrel 0.%{prerelease}.1
+Release: %mkrel 0.%{prerelease}.2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}%{prerelease}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -26,8 +26,8 @@ Patch3: hal-0.2.97-order.patch
 Patch21: hal-0.5.7.1-pinit.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-# (tpg) 0.5.9.1-2mdv fix build with latest glibc (#31912)
-Patch49: hal-0.5.9.1-fix-linux_dvd_rw_utils.diff
+# (fc) 0.5.10rc1-2mdv update to latest GIT snapshot (f3e160d0ab85f62b76400cb521b4d1b5813d0711)
+Patch50: hal-0.5.10rc1-gitsnapshot.patch
 License: AFL/GPL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -59,7 +59,8 @@ BuildRequires: libsmbios-devel
 %endif
 %endif
 Requires: dbus >= %{dbus_version}
-Requires (pre): hal-info > 0.0-4.20070302.1mdv
+Requires(pre): hal-info > 0.0-4.20070302.1mdv
+Requires(post): %{lib_name} >= %{version}-%{release}
 Requires: hal-info 
 #needed to get pci.ids
 Requires: pciutils 
@@ -102,8 +103,8 @@ Headers and static libraries for HAL.
 %setup -q
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
+%patch50 -p1 -b .gitsnapshot
 %patch48 -p1 -b .allow_uid_for_ntfs
-%patch49 -p1 -b .fixglibc
 
 %build
 
