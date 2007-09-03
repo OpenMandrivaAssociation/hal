@@ -12,12 +12,12 @@
 %define develname %mklibname %{name} %{lib_major} -d
 %endif
 
-%define prerelease rc1
+%define prerelease rc2
 
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %mkrel 0.%{prerelease}.2
+Release: %mkrel 0.%{prerelease}.1
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}%{prerelease}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -26,8 +26,6 @@ Patch3: hal-0.2.97-order.patch
 Patch21: hal-0.5.7.1-pinit.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-# (fc) 0.5.10rc1-2mdv update to latest GIT snapshot (f3e160d0ab85f62b76400cb521b4d1b5813d0711)
-Patch50: hal-0.5.10rc1-gitsnapshot.patch
 License: AFL/GPL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -103,7 +101,6 @@ Headers and static libraries for HAL.
 %setup -q
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
-%patch50 -p1 -b .gitsnapshot
 %patch48 -p1 -b .allow_uid_for_ntfs
 
 %build
@@ -191,7 +188,8 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc COPYING NEWS doc/spec/docbook.css doc/spec/*.png doc/spec/*.html
+%doc COPYING NEWS 
+%doc %{_docdir}/hal
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/hal.conf
 %config(noreplace) %{_sysconfdir}/rc.d/init.d/*
 %config(noreplace) %{_sysconfdir}/udev/rules.d/90-hal.rules
@@ -225,7 +223,6 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 
 %files -n %{develname}
 %defattr(-,root,root)
-%doc doc/TODO doc/spec/*.png doc/spec/*.html
 %doc %_datadir/gtk-doc/html/*
 %{_libdir}/lib*.a
 %{_libdir}/lib*.la
