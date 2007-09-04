@@ -188,7 +188,6 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc COPYING NEWS 
 %doc %{_docdir}/hal
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/hal.conf
 %config(noreplace) %{_sysconfdir}/rc.d/init.d/*
