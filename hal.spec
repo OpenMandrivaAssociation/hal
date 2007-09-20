@@ -17,7 +17,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %mkrel 0.%{prerelease}.2
+Release: %mkrel 0.%{prerelease}.3
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}%{prerelease}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -91,6 +91,7 @@ Provides: %{name}-devel = %{version}-%{release}
 Provides: lib%{name}-devel = %{version}-%{release}
 #gw got this from the pkgconfig file:
 Requires: dbus-devel >= %{dbus_version}
+Conflicts: hal < 0.5.10-0.rc2.3mdv2008.0
 Conflicts: %{_lib}hal0-devel
 %if %mdkversion >= 200800
 Obsoletes: %{lib_name}-devel
@@ -191,7 +192,6 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc %{_docdir}/hal
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/hal.conf
 %config(noreplace) %{_sysconfdir}/rc.d/init.d/*
 %config(noreplace) %{_sysconfdir}/udev/rules.d/90-hal.rules
@@ -225,6 +225,7 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 
 %files -n %{develname}
 %defattr(-,root,root)
+%doc %{_docdir}/hal/spec
 %doc %_datadir/gtk-doc/html/*
 %{_libdir}/lib*.a
 %{_libdir}/lib*.la
