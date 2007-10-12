@@ -12,22 +12,18 @@
 %define develname %mklibname %{name} %{lib_major} -d
 %endif
 
-%define prerelease rc2
-
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %mkrel 0.%{prerelease}.4
+Release: %mkrel 1
 URL: http://www.freedesktop.org/Software/hal
-Source0: http://freedesktop.org/~david/dist/%{name}-%{version}%{prerelease}.tar.gz
+Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 Patch3: hal-0.2.97-order.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
 Patch21: hal-0.5.7.1-pinit.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-# (fc) 0.5.10rc2-2mdv increase timeout when generating fdi cache (needed when using slow or virtualized systems)
-Patch49: hal-0.5.10rc2-increasetimeout.patch
 # (fc) 0.5.10rc2-4mdv fix int_outof handling
 Patch50: hal-0.5.10rc2-int_outof.patch
 License: AFL/GPL
@@ -107,7 +103,6 @@ Headers and static libraries for HAL.
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
 %patch48 -p1 -b .allow_uid_for_ntfs
-%patch49 -p1 -b .increasetimeout
 %patch50 -p1 -b .int_outof
 
 %build
