@@ -15,7 +15,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %mkrel 1
+Release: %mkrel 2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -26,6 +26,9 @@ Patch21: hal-0.5.7.1-pinit.patch
 Patch48: hal-allow_uid_for_ntfs.patch
 # (fc) 0.5.10rc2-4mdv fix int_outof handling
 Patch50: hal-0.5.10rc2-int_outof.patch
+# (fc) 0.5.10-2mdv fix infinite loop with empty rules (Dany)
+Patch51: hal-fix-loop_on_empty_fdi_rules.diff
+
 License: AFL/GPL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -104,6 +107,7 @@ Headers and static libraries for HAL.
 %patch21 -p1 -b .pinit
 %patch48 -p1 -b .allow_uid_for_ntfs
 %patch50 -p1 -b .int_outof
+%patch51 -p1 -b .infinite_loop
 
 %build
 
