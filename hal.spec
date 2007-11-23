@@ -15,7 +15,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %mkrel 2
+Release: %mkrel 3
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -29,12 +29,14 @@ Patch50: hal-0.5.10rc2-int_outof.patch
 # (fc) 0.5.10-2mdv fix infinite loop with empty rules (Dany)
 Patch51: hal-fix-loop_on_empty_fdi_rules.diff
 
+Patch52: hal-visibility.patch
+
 License: AFL/GPL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires(pre): rpm-helper
 Requires(preun): rpm-helper
-Requires(post): rpm-helper
+Require;s(post): rpm-helper
 BuildRequires: expat-devel >= %{expat_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
@@ -108,6 +110,7 @@ Headers and static libraries for HAL.
 %patch48 -p1 -b .allow_uid_for_ntfs
 %patch50 -p1 -b .int_outof
 %patch51 -p1 -b .infinite_loop
+%patch52 -p1 -b .visibility
 
 %build
 
