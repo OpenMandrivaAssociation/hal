@@ -36,7 +36,7 @@ Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires(pre): rpm-helper
 Requires(preun): rpm-helper
-Require;s(post): rpm-helper
+Requires(post): rpm-helper
 BuildRequires: expat-devel >= %{expat_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
