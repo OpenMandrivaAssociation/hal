@@ -28,8 +28,8 @@ Patch48: hal-allow_uid_for_ntfs.patch
 Patch50: hal-0.5.10rc2-int_outof.patch
 # (fc) 0.5.10-2mdv fix infinite loop with empty rules (Dany)
 Patch51: hal-fix-loop_on_empty_fdi_rules.diff
-
-Patch52: hal-visibility.patch
+# (fc) 0.5.10-3mdv handle system bus restart
+Patch52: hal-0.5.10-dbusrestart.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -61,6 +61,9 @@ BuildRequires: consolekit-devel
 BuildRequires: libsmbios-devel
 %endif
 %endif
+%if %mdkversion >= 200810
+BuildRequires: polkit-devel
+%endif
 Requires: dbus >= %{dbus_version}
 Requires(pre): hal-info > 0.0-4.20070302.1mdv
 Requires(post): %{lib_name} >= %{version}-%{release}
@@ -71,6 +74,11 @@ Requires: pciutils
 Requires: usbutils
 # needed for luks support
 Requires: cryptsetup-luks
+%if %mdkversion >= 200810
+Requires: policykit
+Requires: acl
+Requires(pre): policykit >= 0.7
+%endif
 
 %description
 HAL is daemon for collection and maintaining information from several
@@ -110,7 +118,7 @@ Headers and static libraries for HAL.
 %patch48 -p1 -b .allow_uid_for_ntfs
 %patch50 -p1 -b .int_outof
 %patch51 -p1 -b .infinite_loop
-%patch52 -p1 -b .visibility
+%patch52 -p1 -b .dbusrestart
 
 %build
 
@@ -118,6 +126,9 @@ Headers and static libraries for HAL.
     --localstatedir=%{_var} --enable-acpi-ibm --enable-acpi-toshiba \
     --disable-selinux --disable-policy-kit --enable-umount-helper \
     --enable-docbook-docs --enable-gtk-doc --with-usb-csr \
+%if %mdkversion >= 200810
+    --enable-policy-kit --enable-acl-management \
+%endif
 %if %mdkversion >= 200800
 %ifarch %ix86 x86_64 ia64
     --with-dell-backlight \
@@ -178,6 +189,8 @@ rm -rf %{buildroot}
 %pre
 %_pre_useradd haldaemon / /sbin/nologin
 %_pre_groupadd daemon haldaemon
+# User haldaemon needs to be able to read authorizations
+%{_bindir}/polkit-auth --user haldaemon --grant org.freedesktop.policykit.read >& /dev/null || :
 
 %post -n %{lib_name} -p /sbin/ldconfig
 
@@ -214,6 +227,11 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %{_bindir}/hal-disable-polling
 %{_bindir}/hal-lock
 %{_bindir}/hal-setup-keymap
+%if %mdkversion >= 200810
+%{_bindir}/hal-is-caller-privileged
+%{_datadir}/PolicyKit/policy/*
+%attr(0750,haldaemon,haldaemon) %dir %{_var}/lib/hal
+%endif
 %{_mandir}/man1/*
 %{_mandir}/man8/*
 
