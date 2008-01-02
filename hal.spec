@@ -33,6 +33,7 @@ Patch52: hal-0.5.10-dbusrestart.patch
 
 License: AFL/GPL
 Group: System/Libraries
+BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires(pre): rpm-helper
 Requires(preun): rpm-helper
 Requires(post): rpm-helper
