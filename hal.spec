@@ -15,7 +15,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %mkrel 3
+Release: %mkrel 4
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -30,6 +30,8 @@ Patch50: hal-0.5.10rc2-int_outof.patch
 Patch51: hal-fix-loop_on_empty_fdi_rules.diff
 # (fc) 0.5.10-3mdv handle system bus restart
 Patch52: hal-0.5.10-dbusrestart.patch
+# (fc) 0.5.10-4mdv fix assert on empty match rules (Mdv bug #36871) (GIT)
+Patch53: hal-fix-assert-on-empty-match.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -49,7 +51,6 @@ BuildRequires: libvolume_id-devel
 BuildRequires: usbutils
 BuildRequires: glibc-static-devel
 BuildRequires: perl(XML::Parser)
-BuildRequires: ImageMagick
 BuildRequires: docbook-dtd412-xml
 BuildRequires: intltool
 BuildRequires: gtk-doc
@@ -119,6 +120,7 @@ Headers and static libraries for HAL.
 %patch50 -p1 -b .int_outof
 %patch51 -p1 -b .infinite_loop
 %patch52 -p1 -b .dbusrestart
+%patch53 -p1 -b .fix_assert_empty_match
 
 %build
 
