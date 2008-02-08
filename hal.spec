@@ -15,7 +15,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %mkrel 5
+Release: %mkrel 6
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -33,7 +33,21 @@ Patch52: hal-0.5.10-dbusrestart.patch
 # (fc) 0.5.10-4mdv fix assert on empty match rules (Mdv bug #36871) (GIT)
 Patch53: hal-fix-assert-on-empty-match.patch
 # (fc) 0.5.10-5mdv fix double battery listing when both procfs and sysfs are enabled (GIT)
-Patch54: hal-0.5.10-sysfs-acpi.patch
+Patch54: hal-0.5.10-fixbattery.patch
+# (fc) 0.5.10-6mdv fix memleak (GIT)
+Patch55: hal-0.5.10-fixmemleak.patch
+# (fc) 0.5.10-6mdv fix fd leak (GIT)
+Patch56: hal-0.5.10-fixfdleak.patch
+# (fc) 0.5.10-6mdv fix endless lopp in storage detection (GIT)
+Patch57: hal-0.5.10-fixendlessloopstorage.patch
+# (fc) 0.5.10-6mdv fix crash when FDI are added (GIT) (Novell bug 344231)
+Patch58: hal-0.5.10-fixfdicrash.patch
+# (fc) 0.5.10-6mdv improve media detection on old CD/DVD drives (GIT)
+Patch59: hal-0.5.10-fixmediadetection.patch
+# (fc) 0.5.10-6mdv ignore NameAcquired dbus message (GIT)
+Patch60: hal-0.5.10-ignoredbusnameacquired.patch
+# (fc) 0.5.10-6mdv fix dbus leak (GIT)
+Patch61: hal-0.5.10-fixdbusleak.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -123,7 +137,14 @@ Headers and static libraries for HAL.
 %patch51 -p1 -b .infinite_loop
 %patch52 -p1 -b .dbusrestart
 %patch53 -p1 -b .fix_assert_empty_match
-%patch54 -p1 -b .sysfs-acpi
+%patch54 -p1 -b .fixbattery
+%patch55 -p1 -b .fixmemleak
+%patch56 -p1 -b .fixfdleak
+%patch57 -p1 -b .fixendlessloopstorage
+%patch58 -p1 -b .fixfdicrash
+%patch59 -p1 -b .fixmediadetection
+%patch60 -p1 -b .ignoredbusnameacquired
+%patch61 -p1 -b .fixdbusleak
 
 %build
 
