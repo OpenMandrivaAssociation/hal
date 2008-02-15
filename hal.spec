@@ -6,10 +6,12 @@
 
 %define lib_major 1
 %define lib_name %mklibname %{name} %{lib_major}
-%if %mdkversion >= 200800
+
 %define develname %mklibname %{name} -d
-%else
+%if %vendor == Mandriva
+%if %mdkversion < 200800
 %define develname %mklibname %{name} %{lib_major} -d
+%endif
 %endif
 
 Summary: Hardware Abstraction Layer
