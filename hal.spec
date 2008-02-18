@@ -14,10 +14,14 @@
 %endif
 %endif
 
+%if "%{?manbo_mkrel:has_manbo}" == ""
+%define manbo_mkrel(c:) %{-c: 0.%{-c*}.}%{1}%{?subrel:.%subrel}%{?distsuffix:%distsuffix}%{?!distsuffix:mdv}%{?mandriva_release:%mandriva_release}
+%endif
+
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %mkrel 6
+Release: %manbo_mkrel 7
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
