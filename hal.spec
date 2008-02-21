@@ -14,14 +14,10 @@
 %endif
 %endif
 
-%if "%{?manbo_mkrel:has_manbo}" == ""
-%define manbo_mkrel(c:) %{-c: 0.%{-c*}.}%{1}%{?subrel:.%subrel}%{?distsuffix:%distsuffix}%{?!distsuffix:mdv}%{?mandriva_release:%mandriva_release}
-%endif
-
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.10
-Release: %manbo_mkrel 7
+Release: %mkrel 7
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -54,6 +50,8 @@ Patch59: hal-0.5.10-fixmediadetection.patch
 Patch60: hal-0.5.10-ignoredbusnameacquired.patch
 # (fc) 0.5.10-6mdv fix dbus leak (GIT)
 Patch61: hal-0.5.10-fixdbusleak.patch
+# (fc) 0.5.10-7mdv fix crash on shutdown
+Patch62: hal-0.5.10-fixcrashonshutdown.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -151,6 +149,7 @@ Headers and static libraries for HAL.
 %patch59 -p1 -b .fixmediadetection
 %patch60 -p1 -b .ignoredbusnameacquired
 %patch61 -p1 -b .fixdbusleak
+%patch62 -p1 -b .fixcrashonshutdown
 
 %build
 
