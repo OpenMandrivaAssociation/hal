@@ -1,5 +1,5 @@
 %define expat_version           1.95.5
-%define glib2_version           2.6.0
+%define glib2_version           2.14.0
 %define dbus_glib_version       0.70
 %define dbus_version       0.90
 %define dbus_python_version 0.71
@@ -14,42 +14,18 @@
 
 Summary: Hardware Abstraction Layer
 Name: hal
-Version: 0.5.10
-Release: %mkrel 7
+Version: 0.5.11
+Release: %mkrel 0.rc1.1
 URL: http://www.freedesktop.org/Software/hal
-Source0: http://freedesktop.org/~david/dist/%{name}-%{version}.tar.gz
+Source0: http://freedesktop.org/~david/dist/%{name}-%{version}rc1.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 Patch3: hal-0.2.97-order.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
 Patch21: hal-0.5.7.1-pinit.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-# (fc) 0.5.10rc2-4mdv fix int_outof handling
-Patch50: hal-0.5.10rc2-int_outof.patch
-# (fc) 0.5.10-2mdv fix infinite loop with empty rules (Dany)
-Patch51: hal-fix-loop_on_empty_fdi_rules.diff
-# (fc) 0.5.10-3mdv handle system bus restart
-Patch52: hal-0.5.10-dbusrestart.patch
-# (fc) 0.5.10-4mdv fix assert on empty match rules (Mdv bug #36871) (GIT)
-Patch53: hal-fix-assert-on-empty-match.patch
-# (fc) 0.5.10-5mdv fix double battery listing when both procfs and sysfs are enabled (GIT)
-Patch54: hal-0.5.10-fixbattery.patch
-# (fc) 0.5.10-6mdv fix memleak (GIT)
-Patch55: hal-0.5.10-fixmemleak.patch
-# (fc) 0.5.10-6mdv fix fd leak (GIT)
-Patch56: hal-0.5.10-fixfdleak.patch
-# (fc) 0.5.10-6mdv fix endless lopp in storage detection (GIT)
-Patch57: hal-0.5.10-fixendlessloopstorage.patch
-# (fc) 0.5.10-6mdv fix crash when FDI are added (GIT) (Novell bug 344231)
-Patch58: hal-0.5.10-fixfdicrash.patch
-# (fc) 0.5.10-6mdv improve media detection on old CD/DVD drives (GIT)
-Patch59: hal-0.5.10-fixmediadetection.patch
-# (fc) 0.5.10-6mdv ignore NameAcquired dbus message (GIT)
-Patch60: hal-0.5.10-ignoredbusnameacquired.patch
-# (fc) 0.5.10-6mdv fix dbus leak (GIT)
-Patch61: hal-0.5.10-fixdbusleak.patch
-# (fc) 0.5.10-7mdv fix crash on shutdown
-Patch62: hal-0.5.10-fixcrashonshutdown.patch
+# (fc) 0.5.11-0.rc1.1mdv fix build when policykit is enabled
+Patch49: hal-0.5.11rc1-fixbuild.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -131,23 +107,11 @@ Obsoletes: %{lib_name}-devel
 Headers and static libraries for HAL.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}rc1
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
 %patch48 -p1 -b .allow_uid_for_ntfs
-%patch50 -p1 -b .int_outof
-%patch51 -p1 -b .infinite_loop
-%patch52 -p1 -b .dbusrestart
-%patch53 -p1 -b .fix_assert_empty_match
-%patch54 -p1 -b .fixbattery
-%patch55 -p1 -b .fixmemleak
-%patch56 -p1 -b .fixfdleak
-%patch57 -p1 -b .fixendlessloopstorage
-%patch58 -p1 -b .fixfdicrash
-%patch59 -p1 -b .fixmediadetection
-%patch60 -p1 -b .ignoredbusnameacquired
-%patch61 -p1 -b .fixdbusleak
-%patch62 -p1 -b .fixcrashonshutdown
+%patch49 -p1 -b .fixbuild
 
 %build
 
@@ -173,23 +137,11 @@ Headers and static libraries for HAL.
 %install
 rm -rf %{buildroot}
 
+mkdir -p %{buildroot}/%{_var}/run/hal
+
 %makeinstall_std
 
 %find_lang %{name}
-
-cat << EOF > %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/99-mandriva-storage-policy-fixed-drives.fdi
-<?xml version="1.0" encoding="UTF-8"?> <!-- -*- SGML -*- --> 
-
-<deviceinfo version="0.2">
-<device>
-  <match key="@block.storage_device:storage.hotpluggable" bool="false">
-    <match key="@block.storage_device:storage.removable" bool="false">
-      <merge key="volume.ignore" type="bool">true</merge>
-    </match>
-  </match>
-</device>
-</deviceinfo>
-EOF
 
 cat << EOF > %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/90-default-policy-mount-point-names.fdi
 <?xml version="1.0" encoding="ISO-8859-1"?> <!-- -*- SGML -*- --> 
@@ -259,7 +211,7 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %if %mdkversion >= 200810
 %{_bindir}/hal-is-caller-privileged
 %{_datadir}/PolicyKit/policy/*
-%attr(0750,haldaemon,haldaemon) %dir %{_var}/lib/hal
+%attr(0750,haldaemon,haldaemon) %dir %{_var}/run/hal
 %endif
 %{_mandir}/man1/*
 %{_mandir}/man8/*
