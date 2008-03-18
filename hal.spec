@@ -15,17 +15,15 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.11
-Release: %mkrel 0.rc1.1
+Release: %mkrel 0.rc2.1
 URL: http://www.freedesktop.org/Software/hal
-Source0: http://freedesktop.org/~david/dist/%{name}-%{version}rc1.tar.gz
+Source0: http://freedesktop.org/~david/dist/%{name}-%{version}rc2.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 Patch3: hal-0.2.97-order.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
 Patch21: hal-0.5.7.1-pinit.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-# (fc) 0.5.11-0.rc1.1mdv fix build when policykit is enabled
-Patch49: hal-0.5.11rc1-fixbuild.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -107,11 +105,10 @@ Obsoletes: %{lib_name}-devel
 Headers and static libraries for HAL.
 
 %prep
-%setup -q -n %{name}-%{version}rc1
+%setup -q -n %{name}-%{version}rc2
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
 %patch48 -p1 -b .allow_uid_for_ntfs
-%patch49 -p1 -b .fixbuild
 
 %build
 
