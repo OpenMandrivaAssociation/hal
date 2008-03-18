@@ -134,7 +134,7 @@ Headers and static libraries for HAL.
 %install
 rm -rf %{buildroot}
 
-mkdir -p %{buildroot}/%{_var}/run/hal
+mkdir -p %{buildroot}/%{_var}/run/hald
 
 %makeinstall_std
 
@@ -208,7 +208,7 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %if %mdkversion >= 200810
 %{_bindir}/hal-is-caller-privileged
 %{_datadir}/PolicyKit/policy/*
-%attr(0750,haldaemon,haldaemon) %dir %{_var}/run/hal
+%attr(0750,haldaemon,haldaemon) %dir %{_var}/run/hald
 %endif
 %{_mandir}/man1/*
 %{_mandir}/man8/*
