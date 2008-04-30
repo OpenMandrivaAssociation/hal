@@ -15,7 +15,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.11
-Release: %mkrel 0.rc2.1
+Release: %mkrel 0.rc2.2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}rc2.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -24,6 +24,8 @@ Patch3: hal-0.2.97-order.patch
 Patch21: hal-0.5.7.1-pinit.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
+# (hk) 0.5.11-0.rc2.2mdv add memstick bus support, from Mathew Garret (Ubuntu)
+Patch49: hal-0.5.11rc2-memstick_bus_support.patch
 
 License: AFL/GPL
 Group: System/Libraries
@@ -109,6 +111,7 @@ Headers and static libraries for HAL.
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
 %patch48 -p1 -b .allow_uid_for_ntfs
+%patch49 -p1 -b .memstick_bus_support
 
 %build
 
