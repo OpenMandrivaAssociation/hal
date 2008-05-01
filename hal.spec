@@ -15,7 +15,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.11
-Release: %mkrel 0.rc2.2
+Release: %mkrel 0.rc2.3
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://freedesktop.org/~david/dist/%{name}-%{version}rc2.tar.gz
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -26,8 +26,9 @@ Patch21: hal-0.5.7.1-pinit.patch
 Patch48: hal-allow_uid_for_ntfs.patch
 # (hk) 0.5.11-0.rc2.2mdv add memstick bus support, from Mathew Garret (Ubuntu)
 Patch49: hal-0.5.11rc2-memstick_bus_support.patch
-
-License: AFL/GPL
+# (tpg) https://bugs.launchpad.net/ubuntu/+source/hal/+bug/203679
+Patch50: hal-0.5.11rc2-fix-input-addon.patch
+License: GPLv2 or AFL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires(pre): rpm-helper
@@ -112,6 +113,7 @@ Headers and static libraries for HAL.
 %patch21 -p1 -b .pinit
 %patch48 -p1 -b .allow_uid_for_ntfs
 %patch49 -p1 -b .memstick_bus_support
+%patch50 -p1 -b .addon
 
 %build
 
@@ -236,5 +238,3 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*
 %{_includedir}/*
-
-
