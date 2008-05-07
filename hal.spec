@@ -24,7 +24,7 @@ Patch3: hal-0.2.97-order.patch
 Patch21: hal-0.5.7.1-pinit.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
-# (hk) 0.5.11-0.rc2.2mdv add memstick bus support, from Mathew Garret (Ubuntu)
+# (hk) 0.5.11-0.rc2.2mdv add memstick bus support, from Matthew Garrett (Ubuntu)
 Patch49: hal-0.5.11rc2-memstick_bus_support.patch
 # (tpg) https://bugs.launchpad.net/ubuntu/+source/hal/+bug/203679
 Patch50: hal-0.5.11rc2-fix-input-addon.patch
