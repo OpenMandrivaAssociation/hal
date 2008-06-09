@@ -175,7 +175,9 @@ rm -rf %{buildroot}
 # User haldaemon needs to be able to read authorizations
 %{_bindir}/polkit-auth --user haldaemon --grant org.freedesktop.policykit.read >& /dev/null || :
 
+%if %mdkversion < 200900
 %post -n %{lib_name} -p /sbin/ldconfig
+%endif
 
 %post
 if [ "$1" = "2" -a -r %{_datadir}/hal/fdi/30osvendor/locale-policy.fdi ]; then
@@ -186,7 +188,9 @@ fi
 %preun
 %_preun_service haldaemon
 
+%if %mdkversion < 200900
 %postun -n %{lib_name} -p /sbin/ldconfig
+%endif
 
 %triggerpostun -- hal < 0.5.7.1
 sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for details/d" -e '/.*\,managed.*/d' /etc/fstab
