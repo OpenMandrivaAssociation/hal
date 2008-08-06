@@ -15,9 +15,9 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.11
-Release: %mkrel 0.rc2.3
+Release: %mkrel 1
 URL: http://www.freedesktop.org/Software/hal
-Source0: http://freedesktop.org/~david/dist/%{name}-%{version}rc2.tar.gz
+Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 Patch3: hal-0.2.97-order.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
@@ -26,8 +26,10 @@ Patch21: hal-0.5.7.1-pinit.patch
 Patch48: hal-allow_uid_for_ntfs.patch
 # (hk) 0.5.11-0.rc2.2mdv add memstick bus support, from Matthew Garrett (Ubuntu)
 Patch49: hal-0.5.11rc2-memstick_bus_support.patch
-# (tpg) https://bugs.launchpad.net/ubuntu/+source/hal/+bug/203679
-Patch50: hal-0.5.11rc2-fix-input-addon.patch
+# (fc) 0.5.11-1mdv various upstream fixes (GIT)
+Patch50: hal-0.5.11-gitfixes.patch
+# (fc) 0.5.11-1mdv startup speedup (Arjan van de Ven)
+Patch51: hal-0.5.11-speedup.patch
 License: GPLv2 or AFL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -108,12 +110,13 @@ Obsoletes: %{lib_name}-devel
 Headers and static libraries for HAL.
 
 %prep
-%setup -q -n %{name}-%{version}rc2
+%setup -q 
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
 %patch48 -p1 -b .allow_uid_for_ntfs
 %patch49 -p1 -b .memstick_bus_support
-%patch50 -p1 -b .addon
+%patch50 -p1 -b .gitfixes
+%patch51 -p1 -b .speedup
 
 %build
 
