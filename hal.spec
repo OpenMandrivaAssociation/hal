@@ -15,7 +15,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.11
-Release: %mkrel 1
+Release: %mkrel 2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -30,6 +30,8 @@ Patch49: hal-0.5.11rc2-memstick_bus_support.patch
 Patch50: hal-0.5.11-gitfixes.patch
 # (fc) 0.5.11-1mdv startup speedup (Arjan van de Ven)
 Patch51: hal-0.5.11-speedup.patch
+# (fc) 0.5.11-2mdv fix calls with ConsoleKit >= 0.3
+Patch52: hal-0.5.11-ck03.patch
 License: GPLv2 or AFL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -54,7 +56,11 @@ BuildRequires: gtk-doc
 BuildRequires: xmlto
 BuildRequires: gperf
 %if %mdkversion >= 200800
+%if %mdkversion >= 200900
+BuildRequires: consolekit-devel >= 0.3.0
+%else
 BuildRequires: consolekit-devel
+%endif
 %ifarch %ix86 x86_64 ia64
 BuildRequires: libsmbios-devel
 %endif
@@ -117,6 +123,10 @@ Headers and static libraries for HAL.
 %patch49 -p1 -b .memstick_bus_support
 %patch50 -p1 -b .gitfixes
 %patch51 -p1 -b .speedup
+%patch52 -p1 -b .ck03
+
+#needed by patch52
+#autoreconf
 
 %build
 
