@@ -126,7 +126,7 @@ Headers and static libraries for HAL.
 %patch52 -p1 -b .ck03
 
 #needed by patch52
-#autoreconf
+autoreconf
 
 %build
 
