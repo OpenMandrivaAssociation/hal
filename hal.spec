@@ -15,7 +15,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.11
-Release: %mkrel 3
+Release: %mkrel 4
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -32,6 +32,8 @@ Patch50: hal-0.5.11-gitfixes.patch
 Patch51: hal-0.5.11-speedup.patch
 # (fc) 0.5.11-2mdv fix calls with ConsoleKit >= 0.3
 Patch52: hal-0.5.11-ck03.patch
+# (fc) 0.5.11-3mdv ensure compat with new udev releases (Lucas Hazel)
+Patch53: hal-0.5.11-udevadm.patch
 License: GPLv2 or AFL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -124,6 +126,7 @@ Headers and static libraries for HAL.
 %patch50 -p1 -b .gitfixes
 %patch51 -p1 -b .speedup
 %patch52 -p1 -b .ck03
+%patch53 -p1 -b .udevadm
 
 #needed by patch52
 autoreconf
