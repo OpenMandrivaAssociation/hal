@@ -15,13 +15,14 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.11
-Release: %mkrel 7
+Release: %mkrel 8
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
-Patch3: hal-0.2.97-order.patch
+# (aw) updated 0.5.11-8, messagebus has moved later
+Patch3: hal-0.5.11-order.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
-Patch21: hal-0.5.7.1-pinit.patch
+Patch21: hal-0.5.11-pinit.patch
 # (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
 Patch48: hal-allow_uid_for_ntfs.patch
 # (hk) 0.5.11-0.rc2.2mdv add memstick bus support, from Matthew Garrett (Ubuntu)
@@ -181,7 +182,7 @@ EOF
 %clean
 rm -rf %{buildroot}
 
-%triggerpostun -- hal < 0.2.97-3mdk
+%triggerpostun -- hal < 0.5.11-8
 /sbin/chkconfig --del haldaemon
 /sbin/chkconfig --add haldaemon
 
