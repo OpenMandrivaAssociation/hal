@@ -12,29 +12,26 @@
 %define develname %mklibname %{name} %{lib_major} -d
 %endif
 
+%define prerel rc1
+
 Summary: Hardware Abstraction Layer
 Name: hal
-Version: 0.5.11
-Release: %mkrel 8
+Version: 0.5.12
+Release: %mkrel 0.%{prerel}.1
 URL: http://www.freedesktop.org/Software/hal
-Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
+Source0: http://hal.freedesktop.org/releases/%{name}-%{version}%{prerel}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 # (aw) updated 0.5.11-8, messagebus has moved later
 Patch3: hal-0.5.11-order.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
 Patch21: hal-0.5.11-pinit.patch
-# (fc) 0.5.8.1-6mdv allow "uid" for NTFS partitions (SUSE)
-Patch48: hal-allow_uid_for_ntfs.patch
-# (hk) 0.5.11-0.rc2.2mdv add memstick bus support, from Matthew Garrett (Ubuntu)
-Patch49: hal-0.5.11rc2-memstick_bus_support.patch
-# (fc) 0.5.11-1mdv various upstream fixes (GIT)
-Patch50: hal-0.5.11-gitfixes.patch
-# (fc) 0.5.11-1mdv startup speedup (Arjan van de Ven)
-Patch51: hal-0.5.11-speedup.patch
-# (fc) 0.5.11-2mdv fix calls with ConsoleKit >= 0.3
-Patch52: hal-0.5.11-ck03.patch
-# (fc) 0.5.11-3mdv ensure compat with new udev releases (Lucas Hazel)
-Patch53: hal-0.5.11-udevadm.patch
+# (fc) 0.5.12-0.rc1.1mdv add --direct to hal-set-property (Fedora)
+Patch22: hal-0.5.10-set-property-direct.patch
+# (fc) 0.5.12-0.rc1.1mdv Add input.keys capability to appropriate button devices (Fedora)
+Patch23: hal-add-keys-to-buttons.patch
+# (fc) 0.5.12-0.rc1.1mdv fix joystick detection (Fedora)
+Patch24: hal-joystick.patch
+
 License: GPLv2 or AFL
 Group: System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -119,18 +116,13 @@ Obsoletes: %{lib_name}-devel
 Headers and static libraries for HAL.
 
 %prep
-%setup -q 
+%setup -q -n %{name}-%{version}%{prerel}
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
-%patch48 -p1 -b .allow_uid_for_ntfs
-%patch49 -p1 -b .memstick_bus_support
-%patch50 -p1 -b .gitfixes
-%patch51 -p1 -b .speedup
-%patch52 -p1 -b .ck03
-%patch53 -p1 -b .udevadm
+%patch22 -p1 -b .direct
+%patch23 -p1 -b .add-keys-to-buttons
+%patch24 -p1 -b .joystick
 
-#needed by patch52
-autoreconf
 
 %build
 
