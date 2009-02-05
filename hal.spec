@@ -14,10 +14,12 @@
 
 %define prerel rc1
 
+%define git_url git://git.freedesktop.org/git/hal
+
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.12
-Release: %mkrel 0.%{prerel}.1
+Release: %mkrel 0.%{prerel}.2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}%{prerel}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -38,6 +40,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires(pre): rpm-helper
 Requires(preun): rpm-helper
 Requires(post): rpm-helper
+Requires(post): chkconfig >= 1.3.37-3mdv
 BuildRequires: expat-devel >= %{expat_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
@@ -196,6 +199,9 @@ fi
 
 %preun
 %_preun_service haldaemon
+
+%triggerpostun -- hal < 0.5.12-0.rc1.2mdv
+/sbin/chkconfig --level 7 haldaemon reset
 
 %if %mdkversion < 200900
 %postun -n %{lib_name} -p /sbin/ldconfig
