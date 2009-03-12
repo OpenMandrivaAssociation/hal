@@ -19,7 +19,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.12
-Release: %mkrel 0.%{prerel}.2
+Release: %mkrel 0.%{prerel}.3
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}%{prerel}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -33,6 +33,10 @@ Patch22: hal-0.5.10-set-property-direct.patch
 Patch23: hal-add-keys-to-buttons.patch
 # (fc) 0.5.12-0.rc1.1mdv fix joystick detection (Fedora)
 Patch24: hal-joystick.patch
+# (fc) 0.5.12-0.rc1.3mdv fix KVM x11 detection (GIT) (Mdv bug #46964)
+Patch25: hal-0.5.12-kvmx11.patch
+# (fc) 0.5.12-0.rc1.3mdv fix dbus warning (GIT)
+Patch26: hal-0.5.12-fix-dbus-warning.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -125,7 +129,8 @@ Headers and static libraries for HAL.
 %patch22 -p1 -b .direct
 %patch23 -p1 -b .add-keys-to-buttons
 %patch24 -p1 -b .joystick
-
+%patch25 -p1 -b .kvmx11
+%patch26 -p1 -b .fix-dbus-warning
 
 %build
 
