@@ -19,7 +19,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.12
-Release: %mkrel 0.%{prerel}.3
+Release: %mkrel 0.%{prerel}.4
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}%{prerel}.tar.bz2
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
@@ -37,6 +37,8 @@ Patch24: hal-joystick.patch
 Patch25: hal-0.5.12-kvmx11.patch
 # (fc) 0.5.12-0.rc1.3mdv fix dbus warning (GIT)
 Patch26: hal-0.5.12-fix-dbus-warning.patch
+# (fc) 0.5.12-0.rc1.4mdv fix duplicated UDI (Mdv bug #48281)
+Patch27: hal-0.5.12rc1-fix-duplicate-udi.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -131,6 +133,7 @@ Headers and static libraries for HAL.
 %patch24 -p1 -b .joystick
 %patch25 -p1 -b .kvmx11
 %patch26 -p1 -b .fix-dbus-warning
+%patch27 -p1 -b .fix-duplicate-udi
 
 %build
 
