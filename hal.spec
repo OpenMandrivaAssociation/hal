@@ -19,9 +19,10 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.12
-Release: %mkrel 0.%{prerel}.4
+Release: %mkrel 0.%{prerel}.5
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}%{prerel}.tar.bz2
+Source1: 10-elantech-touchpad.fdi
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 # (aw) updated 0.5.11-8, messagebus has moved later
 Patch3: hal-0.5.11-order.patch
@@ -181,6 +182,9 @@ cat << EOF > %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/90-default-policy
   </device>
 </deviceinfo>
 EOF
+
+# fix Mdv bug #41204
+install -m644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/hal/fdi/policy/10osvendor
 
 %clean
 rm -rf %{buildroot}
