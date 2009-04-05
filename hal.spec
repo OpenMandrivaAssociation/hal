@@ -137,9 +137,6 @@ Headers and static libraries for HAL.
     --enable-umount-helper \
     --enable-docbook-docs --enable-gtk-doc --with-usb-csr \
     --with-udev-prefix=/lib \
-%if %mdkversion >= 200910
-    --disable-smbios \
-%endif
 %if %mdkversion < 200810
     --disable-policy-kit \
 %else
@@ -147,7 +144,12 @@ Headers and static libraries for HAL.
 %endif
 %if %mdkversion >= 200800
 %ifarch %ix86 x86_64 ia64
+%if %mdkversion >= 200910
+    --disable-smbios \
+    --without-dell-backlight \
+%else
     --with-dell-backlight \
+%endif
 %endif
     --enable-console-kit \
 %else
