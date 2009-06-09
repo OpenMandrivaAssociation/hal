@@ -20,7 +20,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.12
-Release: %mkrel 1
+Release: %mkrel 2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
@@ -37,6 +37,8 @@ Patch23: hal-add-keys-to-buttons.patch
 Patch27: hal-0.5.12rc1-fix-duplicate-udi.patch
 # (fc) 0.5.12-1mdv hide Futjisu recovery partition
 Patch28: hal-0.5.12-hide-fujitsu-recovery-partition.patch
+# (fc) 0.5.12-2mdv fix crash in hal-storage-mount (GIT)
+Patch29: hal-0.5.12-fix-hal-storage-mount-crash.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -134,6 +136,7 @@ Headers and static libraries for HAL.
 %patch23 -p1 -b .add-keys-to-buttons
 %patch27 -p1 -b .fix-duplicate-udi
 %patch28 -p1 -b .hide-fujitsu-recovery-partition
+%patch29 -p1 -b .fix-hal-storage-mount-crash
 
 %build
 
