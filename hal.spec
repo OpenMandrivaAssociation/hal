@@ -20,9 +20,9 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.12
-Release: %mkrel 0.%{prerel}.1
+Release: %mkrel 1
 URL: http://www.freedesktop.org/Software/hal
-Source0: http://hal.freedesktop.org/releases/%{name}-%{version}%{snapshot}.tar.gz
+Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
 # (fc) 0.2.97-3mdk fix start order (Mdk bug #11404)
 # (aw) updated 0.5.11-8, messagebus has moved later
@@ -35,6 +35,8 @@ Patch22: hal-0.5.10-set-property-direct.patch
 Patch23: hal-add-keys-to-buttons.patch
 # (fc) 0.5.12-0.rc1.4mdv fix duplicated UDI (Mdv bug #48281)
 Patch27: hal-0.5.12rc1-fix-duplicate-udi.patch
+# (fc) 0.5.12-1mdv hide Futjisu recovery partition
+Patch28: hal-0.5.12-hide-fujitsu-recovery-partition.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -75,6 +77,7 @@ BuildRequires: libsmbios-devel
 %if %mdkversion >= 200810
 BuildRequires: polkit-devel
 %endif
+BuildRequires: libblkid-devel
 Requires: dbus >= %{dbus_version}
 Requires(pre): hal-info > 0.0-4.20070302.1mdv
 Requires(post): %{lib_name} >= %{version}-%{release}
@@ -90,6 +93,7 @@ Requires: policykit
 Requires: acl
 Requires(pre): policykit >= 0.7
 %endif
+Requires: %mklibname blkid 1
 
 %description
 HAL is daemon for collection and maintaining information from several
@@ -123,12 +127,13 @@ Obsoletes: %{lib_name}-devel
 Headers and static libraries for HAL.
 
 %prep
-%setup -q -n trunk
+%setup -q 
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
 %patch22 -p1 -b .direct
 %patch23 -p1 -b .add-keys-to-buttons
 %patch27 -p1 -b .fix-duplicate-udi
+%patch28 -p1 -b .hide-fujitsu-recovery-partition
 
 %build
 
