@@ -39,6 +39,8 @@ Patch27: hal-0.5.12rc1-fix-duplicate-udi.patch
 Patch28: hal-0.5.12-hide-fujitsu-recovery-partition.patch
 # (fc) 0.5.12-2mdv fix crash in hal-storage-mount (GIT)
 Patch29: hal-0.5.12-fix-hal-storage-mount-crash.patch
+# (fc) 0.5.12-3mdv fix singleton connection (Andrey Borzenkov)
+Patch30: hal-0.5.12-singleton_connection.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -137,6 +139,7 @@ Headers and static libraries for HAL.
 %patch27 -p1 -b .fix-duplicate-udi
 %patch28 -p1 -b .hide-fujitsu-recovery-partition
 %patch29 -p1 -b .fix-hal-storage-mount-crash
+%patch30 -p1 -b .fix-singleton-connection
 
 %build
 
