@@ -20,7 +20,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.12
-Release: %mkrel 2
+Release: %mkrel 3
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
