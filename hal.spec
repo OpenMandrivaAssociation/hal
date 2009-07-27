@@ -20,7 +20,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.13
-Release: %mkrel 1
+Release: %mkrel 2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
@@ -138,7 +138,10 @@ Headers and static libraries for HAL.
 %if %mdkversion < 200810
     --disable-policy-kit \
 %else
-    --enable-policy-kit --enable-acl-management \
+    --enable-policy-kit \
+%if %mdkversion < 201000
+    --enable-acl-management \
+%endif
 %endif
 %if %mdkversion >= 200800
 %ifarch %ix86 x86_64 ia64
