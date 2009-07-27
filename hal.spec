@@ -19,8 +19,8 @@
 
 Summary: Hardware Abstraction Layer
 Name: hal
-Version: 0.5.12
-Release: %mkrel 3
+Version: 0.5.13
+Release: %mkrel 1
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
@@ -29,18 +29,8 @@ Source1: 10-elantech-touchpad.fdi
 Patch3: hal-0.5.11-order.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
 Patch21: hal-0.5.11-pinit.patch
-# (fc) 0.5.12-0.rc1.1mdv add --direct to hal-set-property (Fedora)
-Patch22: hal-0.5.10-set-property-direct.patch
-# (fc) 0.5.12-0.rc1.1mdv Add input.keys capability to appropriate button devices (Fedora)
-Patch23: hal-add-keys-to-buttons.patch
-# (fc) 0.5.12-0.rc1.4mdv fix duplicated UDI (Mdv bug #48281)
-Patch27: hal-0.5.12rc1-fix-duplicate-udi.patch
 # (fc) 0.5.12-1mdv hide Futjisu recovery partition
 Patch28: hal-0.5.12-hide-fujitsu-recovery-partition.patch
-# (fc) 0.5.12-2mdv fix crash in hal-storage-mount (GIT)
-Patch29: hal-0.5.12-fix-hal-storage-mount-crash.patch
-# (fc) 0.5.12-3mdv fix singleton connection (Andrey Borzenkov)
-Patch30: hal-0.5.12-singleton_connection.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -134,14 +124,11 @@ Headers and static libraries for HAL.
 %setup -q 
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
-%patch22 -p1 -b .direct
-%patch23 -p1 -b .add-keys-to-buttons
-%patch27 -p1 -b .fix-duplicate-udi
 %patch28 -p1 -b .hide-fujitsu-recovery-partition
-%patch29 -p1 -b .fix-hal-storage-mount-crash
-%patch30 -p1 -b .fix-singleton-connection
 
 %build
+
+%define _libexecdir %{_libdir}/hal
 
 %configure2_5x \
     --localstatedir=%{_var} --enable-acpi-ibm --enable-acpi-toshiba \
@@ -264,7 +251,7 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 
 %attr(0750,haldaemon,haldaemon) %dir %{_var}/cache/hald
 
-%{_libexecdir}/hal*
+%{_libexecdir}/*
 
 %dir %{_datadir}/hal
 %{_datadir}/hal/fdi
