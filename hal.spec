@@ -20,7 +20,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.13
-Release: %mkrel 2
+Release: %mkrel 3
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
@@ -31,6 +31,8 @@ Patch3: hal-0.5.11-order.patch
 Patch21: hal-0.5.11-pinit.patch
 # (fc) 0.5.12-1mdv hide Futjisu recovery partition
 Patch28: hal-0.5.12-hide-fujitsu-recovery-partition.patch
+# (fc) 0.5.13-3mdv fix mdraid detection (RH bug #507782) (GIT)
+Patch29: hal-0.5.13-fixmdraid.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -47,7 +49,6 @@ BuildRequires: libcap-devel
 BuildRequires: python python-devel
 BuildRequires: pciutils-devel
 BuildRequires: popt-devel
-BuildRequires: libvolume_id-devel
 BuildRequires: usbutils
 BuildRequires: glibc-static-devel
 BuildRequires: perl(XML::Parser)
@@ -125,6 +126,7 @@ Headers and static libraries for HAL.
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
 %patch28 -p1 -b .hide-fujitsu-recovery-partition
+%patch29 -p1 -b .fix-mdraid
 
 %build
 
