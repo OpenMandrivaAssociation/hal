@@ -20,7 +20,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.13
-Release: %mkrel 3
+Release: %mkrel 4
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
@@ -73,6 +73,8 @@ BuildRequires: libsmbios-devel
 BuildRequires: polkit-devel
 %endif
 BuildRequires: libblkid-devel
+# needed for macbook backlight support
+BuildRequires: pci-devel
 Requires: dbus >= %{dbus_version}
 Requires(pre): hal-info > 0.0-4.20070302.1mdv
 Requires(post): %{lib_name} >= %{version}-%{release}
