@@ -48,6 +48,7 @@ BuildRequires: libusb-devel
 BuildRequires: libcap-devel
 BuildRequires: python python-devel
 BuildRequires: pciutils-devel
+BuildRequires: zlib1-devel
 BuildRequires: popt-devel
 BuildRequires: usbutils
 BuildRequires: glibc-static-devel
