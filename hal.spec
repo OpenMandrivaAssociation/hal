@@ -20,7 +20,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.14
-Release: %mkrel 1
+Release: %mkrel 2
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
@@ -29,10 +29,8 @@ Source1: 10-elantech-touchpad.fdi
 Patch3: hal-0.5.11-order.patch
 # (couriousous) 0.5.5.1-4mdk add parallel init informations
 Patch21: hal-0.5.11-pinit.patch
-# (fc) 0.5.12-1mdv hide Futjisu recovery partition
-#Patch28: hal-0.5.12-hide-fujitsu-recovery-partition.patch
-# (fc) 0.5.13-3mdv fix mdraid detection (RH bug #507782) (GIT)
-#Patch29: hal-0.5.13-fixmdraid.patch
+# (fc) 0.5.14-1mdv fix umount helper crash (GIT) (Mdv bug #57138)
+Patch22: hal-0.5.14-fix-umount-crash.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -126,8 +124,7 @@ Headers and static libraries for HAL.
 %setup -q 
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
-#%patch28 -p1 -b .hide-fujitsu-recovery-partition
-#%patch29 -p1 -b .fix-mdraid
+%patch22 -p1 -b .fix-umount-crash
 
 %build
 
