@@ -20,7 +20,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.14
-Release: %mkrel 2
+Release: %mkrel 3
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
@@ -31,6 +31,8 @@ Patch3: hal-0.5.11-order.patch
 Patch21: hal-0.5.11-pinit.patch
 # (fc) 0.5.14-1mdv fix umount helper crash (GIT) (Mdv bug #57138)
 Patch22: hal-0.5.14-fix-umount-crash.patch
+# (fc) 0.5.14-3mdv fix input helper crash (GIT)
+Patch23: hal-0.5.14-fix-input-crash.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -125,6 +127,7 @@ Headers and static libraries for HAL.
 %patch3 -p1 -b .order
 %patch21 -p1 -b .pinit
 %patch22 -p1 -b .fix-umount-crash
+%patch23 -p1 -b .fix-input-crash
 
 %build
 
