@@ -20,7 +20,7 @@
 Summary: Hardware Abstraction Layer
 Name: hal
 Version: 0.5.14
-Release: %mkrel 4
+Release: %mkrel 5
 URL: http://www.freedesktop.org/Software/hal
 Source0: http://hal.freedesktop.org/releases/%{name}-%{version}.tar.bz2
 Source1: 10-elantech-touchpad.fdi
@@ -50,7 +50,7 @@ BuildRequires: libusb-devel
 BuildRequires: libcap-devel
 BuildRequires: python python-devel
 BuildRequires: pciutils-devel
-BuildRequires: zlib1-devel
+BuildRequires: zlib-devel
 BuildRequires: popt-devel
 BuildRequires: usbutils
 BuildRequires: glibc-static-devel
