@@ -35,6 +35,7 @@ Patch22: hal-0.5.14-fix-umount-crash.patch
 Patch23: hal-0.5.14-fix-input-crash.patch
 # (bor) fix crash on unhandled rule (GIT) (mdv #60790)
 Patch24: hal-0.5.14-do-not-crash-on-unhandled-rule.patch
+Patch25: hal-0.5.14-libv4l_header_fix.diff
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -76,6 +77,7 @@ BuildRequires: libsmbios-devel
 BuildRequires: polkit-devel
 %endif
 BuildRequires: libblkid-devel
+BuildRequires: libv4l-devel
 Requires: dbus >= %{dbus_version}
 Requires(pre): hal-info > 0.0-4.20070302.1mdv
 Requires(post): %{lib_name} >= %{version}-%{release}
@@ -131,6 +133,7 @@ Headers and static libraries for HAL.
 %patch22 -p1 -b .fix-umount-crash
 %patch23 -p1 -b .fix-input-crash
 %patch24 -p1 -b .fix-unhandled-rule-crash
+%patch25 -p0 -b .libv4l_header_fix
 
 %build
 
