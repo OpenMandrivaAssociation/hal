@@ -196,7 +196,7 @@ cat << EOF > %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/90-default-policy
 EOF
 
 # fix Mdv bug #41204
-install -m644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/hal/fdi/policy/10osvendor
+install -m644 %{SOURCE1} %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor
 
 %clean
 rm -rf %{buildroot}
