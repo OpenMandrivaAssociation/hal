@@ -36,6 +36,7 @@ Patch23: hal-0.5.14-fix-input-crash.patch
 # (bor) fix crash on unhandled rule (GIT) (mdv #60790)
 Patch24: hal-0.5.14-do-not-crash-on-unhandled-rule.patch
 Patch25: hal-0.5.14-libv4l_header_fix.diff
+Patch26: hal-0.5.14-fix-build-with-current-glib.patch
 
 License: GPLv2 or AFL
 Group: System/Libraries
@@ -74,7 +75,7 @@ BuildRequires: libsmbios-devel
 %endif
 %endif
 %if %mdkversion >= 200810
-BuildRequires: polkit-devel
+BuildRequires: pkgconfig(polkit)
 %endif
 BuildRequires: libblkid-devel
 BuildRequires: libv4l-devel
@@ -134,6 +135,7 @@ Headers and static libraries for HAL.
 %patch23 -p1 -b .fix-input-crash
 %patch24 -p1 -b .fix-unhandled-rule-crash
 %patch25 -p0 -b .libv4l_header_fix
+%patch26 -p1 -b .cur_glib~
 
 %build
 
