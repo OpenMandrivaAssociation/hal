@@ -178,8 +178,6 @@ mkdir -p %{buildroot}/%{_var}/run/hald
 
 %makeinstall_std
 
-%find_lang %{name}
-
 cat << EOF > %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/90-default-policy-mount-point-names.fdi
 <?xml version="1.0" encoding="ISO-8859-1"?> <!-- -*- SGML -*- --> 
 
@@ -236,7 +234,7 @@ fi
 %triggerpostun -- hal < 0.5.7.1
 sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for details/d" -e '/.*\,managed.*/d' /etc/fstab
 
-%files -f %{name}.lang
+%files
 %defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/hal.conf
 %config(noreplace) %{_sysconfdir}/rc.d/init.d/*
