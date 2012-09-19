@@ -277,7 +277,6 @@ sed -i -e "/# This file is edited by fstab-sync - see 'man fstab-sync' for detai
 %doc %{_docdir}/hal/spec
 %doc %_datadir/gtk-doc/html/*
 %{_libdir}/lib*.a
-%{_libdir}/lib*.la
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*
 %{_includedir}/*
