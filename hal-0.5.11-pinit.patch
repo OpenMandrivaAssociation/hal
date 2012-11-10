@@ -1,0 +1,30 @@
+diff -p -up hal-0.5.12rc1/hald/haldaemon.in.pinit hal-0.5.12rc1/hald/haldaemon.in
+--- hal-0.5.12rc1/hald/haldaemon.in.pinit	2009-02-05 18:37:42.000000000 +0100
++++ hal-0.5.12rc1/hald/haldaemon.in	2009-02-05 18:38:11.000000000 +0100
+@@ -2,13 +2,24 @@
+ #
+ # haldaemon:   HAL daemon
+ #
+-# chkconfig: 345 54 02
+-# description:  This is a daemon for collecting and maintaing information \
++# chkconfig: 3457 54 02
++# description:  This is a daemon for collecting and maintaining information \
+ #               about hardware from several sources. \
+ #               See http://www.freedesktop.org/Software/hal
+ #
+ # processname: hald
+ # pidfile: @HALD_PID_FILE@
++### BEGIN INIT INFO
++# Provides: haldaemon
++# Required-Start: messagebus
++# Required-Stop: messagebus
++# Should-Start: acpid
++# Default-Start: 3 4 5 7
++# Short-Description: HAL daemon
++# Description: This is a daemon for collecting and maintaining information
++#              about hardware from several sources.
++#              See http://www.freedesktop.org/Software/hal
++### END INIT INFO
+ #
+ 
+ # Sanity checks.

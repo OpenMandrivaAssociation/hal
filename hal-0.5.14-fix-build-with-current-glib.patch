@@ -1,0 +1,227 @@
+--- hal-0.5.14/hald/freebsd/hal-file-monitor.c.cur_glib~	2008-08-10 15:50:10.000000000 +0200
++++ hal-0.5.14/hald/freebsd/hal-file-monitor.c	2012-09-19 04:12:58.946517477 +0200
+@@ -35,9 +35,6 @@
+ #include <sys/stat.h>
+ 
+ #include <glib.h>
+-#include <glib/gi18n.h>
+-#include <glib/gstdio.h>
+-#include <glib-object.h>
+ 
+ #include "../hal-file-monitor.h"
+ 
+--- hal-0.5.14/hald/hald_dbus.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/hald_dbus.c	2012-09-19 04:12:58.948517679 +0200
+@@ -36,7 +36,6 @@
+ #include <stdint.h>
+ #include <sys/time.h>
+ #include <glib.h>
+-#include <glib/gprintf.h>
+ #include <dbus/dbus.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+--- hal-0.5.14/hald/linux/addons/addon-acpi-buttons-toshiba.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-acpi-buttons-toshiba.c	2012-09-19 04:12:58.949517780 +0200
+@@ -40,7 +40,7 @@ else
+ #include <string.h>
+ #include <unistd.h>
+ 
+-#include <glib/gmain.h>
++#include <glib.h>
+ 
+ #include "libhal/libhal.h"
+ #include "../../logger.h"
+--- hal-0.5.14/hald/linux/addons/addon-cpufreq.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-cpufreq.c	2012-09-19 04:12:58.950517882 +0200
+@@ -32,7 +32,6 @@
+ #include <unistd.h>
+ #include <signal.h>
+ #include <getopt.h>
+-#include <glib/gprintf.h>
+ 
+ #include "addon-cpufreq.h"
+ #include "addon-cpufreq-userspace.h"
+--- hal-0.5.14/hald/linux/addons/addon-generic-backlight.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-generic-backlight.c	2012-09-19 04:12:58.950517882 +0200
+@@ -35,9 +35,7 @@
+ #include <sys/stat.h>
+ #include <unistd.h> 
+ 
+-#include <glib/gmain.h>
+-#include <dbus/dbus-glib.h>
+-#include <dbus/dbus-glib-lowlevel.h>
++#include <glib.h>
+ 
+ #include "libhal/libhal.h"
+ #include "../../logger.h"
+--- hal-0.5.14/hald/linux/addons/addon-imac-backlight.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-imac-backlight.c	2012-09-19 04:12:58.951517983 +0200
+@@ -29,7 +29,7 @@
+ #include <stdlib.h>
+ #include <sys/io.h>
+ 
+-#include <glib/gmain.h>
++#include <glib.h>
+ #include <dbus/dbus-glib.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+--- hal-0.5.14/hald/linux/addons/addon-input.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-input.c	2012-09-19 04:12:58.951517983 +0200
+@@ -41,8 +41,7 @@
+ #else
+   #include <linux/input.h>
+ #endif
+-#include <glib/gmain.h>
+-#include <glib/gprintf.h>
++#include <glib.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+ #include "libhal/libhal.h"
+--- hal-0.5.14/hald/linux/addons/addon-ipw-killswitch.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-ipw-killswitch.c	2012-09-19 04:12:58.951517983 +0200
+@@ -36,8 +36,6 @@
+ #include <unistd.h> 
+ 
+ #include <glib.h>
+-#include <glib/gmain.h>
+-#include <glib/gstdio.h>
+ #include <dbus/dbus-glib.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+--- hal-0.5.14/hald/linux/addons/addon-leds.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-leds.c	2012-09-19 04:12:58.952518084 +0200
+@@ -36,8 +36,6 @@
+ #include <unistd.h> 
+ 
+ #include <glib.h>
+-#include <glib/gmain.h>
+-#include <glib/gstdio.h>
+ #include <dbus/dbus-glib.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+--- hal-0.5.14/hald/linux/addons/addon-macbookpro-backlight.c.cur_glib~	2012-09-19 04:15:33.754232154 +0200
++++ hal-0.5.14/hald/linux/addons/addon-macbookpro-backlight.c	2012-09-19 04:15:39.263048444 +0200
+@@ -39,7 +39,7 @@
+ #include <pci/pci.h>
+ #include <unistd.h> 
+ 
+-#include <glib/gmain.h>
++#include <glib.h>
+ #include <dbus/dbus-glib.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+--- hal-0.5.14/hald/linux/addons/addon-rfkill-killswitch.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-rfkill-killswitch.c	2012-09-19 04:12:58.952518084 +0200
+@@ -36,8 +36,6 @@
+ #include <unistd.h> 
+ 
+ #include <glib.h>
+-#include <glib/gmain.h>
+-#include <glib/gstdio.h>
+ #include <dbus/dbus-glib.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+--- hal-0.5.14/hald/linux/addons/addon-storage.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-storage.c	2012-09-19 04:12:59.167539933 +0200
+@@ -39,7 +39,7 @@
+ #include <string.h>
+ #include <sys/ioctl.h>
+ #include <unistd.h>
+-#include <glib/gmain.h>
++#include <glib.h>
+ #include <dbus/dbus-glib.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+--- hal-0.5.14/hald/linux/addons/addon-usb-csr.c.cur_glib~	2009-08-24 14:42:30.000000000 +0200
++++ hal-0.5.14/hald/linux/addons/addon-usb-csr.c	2012-09-19 04:12:59.167539933 +0200
+@@ -29,7 +29,7 @@
+ #include <string.h>
+ #include <usb.h>
+ 
+-#include <glib/gmain.h>
++#include <glib.h>
+ #include <dbus/dbus-glib.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+--- hal-0.5.14/hald/linux/hal-file-monitor.c.cur_glib~	2008-08-10 15:50:10.000000000 +0200
++++ hal-0.5.14/hald/linux/hal-file-monitor.c	2012-09-19 04:12:59.168540028 +0200
+@@ -36,9 +36,6 @@
+ #endif
+ 
+ #include <glib.h>
+-#include <glib/gi18n.h>
+-#include <glib/gstdio.h>
+-#include <glib-object.h>
+ 
+ #include "../hal-file-monitor.h"
+ 
+--- hal-0.5.14/tools/hal-storage-cleanup-all-mountpoints.c.cur_glib~	2008-08-10 15:50:10.000000000 +0200
++++ hal-0.5.14/tools/hal-storage-cleanup-all-mountpoints.c	2012-09-19 04:12:59.168540028 +0200
+@@ -31,7 +31,6 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <glib.h>
+-#include <glib/gstdio.h>
+ 
+ #include "hal-storage-shared.h"
+ 
+--- hal-0.5.14/tools/hal-storage-cleanup-mountpoint.c.cur_glib~	2008-08-10 15:50:10.000000000 +0200
++++ hal-0.5.14/tools/hal-storage-cleanup-mountpoint.c	2012-09-19 04:12:59.169540118 +0200
+@@ -31,7 +31,6 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <glib.h>
+-#include <glib/gstdio.h>
+ 
+ #include "hal-storage-shared.h"
+ 
+--- hal-0.5.14/tools/hal-storage-closetray.c.cur_glib~	2008-08-10 15:50:10.000000000 +0200
++++ hal-0.5.14/tools/hal-storage-closetray.c	2012-09-19 04:12:59.169540118 +0200
+@@ -30,7 +30,6 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <glib.h>
+-#include <glib/gstdio.h>
+ #include <sys/types.h>
+ #include <unistd.h>
+ 
+--- hal-0.5.14/tools/hal-storage-eject.c.cur_glib~	2008-08-10 15:50:10.000000000 +0200
++++ hal-0.5.14/tools/hal-storage-eject.c	2012-09-19 04:12:59.169540118 +0200
+@@ -29,7 +29,6 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <glib.h>
+-#include <glib/gstdio.h>
+ #include <sys/types.h>
+ #include <unistd.h>
+ 
+--- hal-0.5.14/tools/hal-storage-mount.c.cur_glib~	2009-05-27 22:26:03.000000000 +0200
++++ hal-0.5.14/tools/hal-storage-mount.c	2012-09-19 04:12:59.170540208 +0200
+@@ -30,7 +30,6 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <glib.h>
+-#include <glib/gstdio.h>
+ #ifdef __FreeBSD__
+ #include <fstab.h>
+ #include <sys/param.h>
+--- hal-0.5.14/tools/hal-storage-shared.c.cur_glib~	2008-08-10 15:50:10.000000000 +0200
++++ hal-0.5.14/tools/hal-storage-shared.c	2012-09-19 04:12:59.171540302 +0200
+@@ -30,7 +30,6 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <glib.h>
+-#include <glib/gstdio.h>
+ #ifdef __FreeBSD__
+ #include <fstab.h>
+ #include <sys/param.h>
+--- hal-0.5.14/tools/hal-storage-unmount.c.cur_glib~	2008-08-10 15:50:10.000000000 +0200
++++ hal-0.5.14/tools/hal-storage-unmount.c	2012-09-19 04:12:59.171540302 +0200
+@@ -30,7 +30,6 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <glib.h>
+-#include <glib/gstdio.h>
+ #ifdef __FreeBSD__
+ #include <fstab.h>
+ #include <sys/param.h>
