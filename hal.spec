@@ -45,6 +45,11 @@ Requires(pre): rpm-helper
 Requires(preun): rpm-helper
 Requires(post): rpm-helper
 Requires(post): chkconfig >= 1.3.37-3mdv
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires: expat-devel >= %{expat_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
